@@ -127,6 +127,6 @@ define Device/openstick-sp970v10
   DEVICE_DTS_DIR := ../dts
   DEVICE_PACKAGES := openstick-tweaks wpad-basic-wolfssl qcom-msm8916-modem-openstick-sp970v10-firmware qcom-msm8916-openstick-sp970v10-wcnss-firmware qcom-msm8916-wcnss-openstick-sp970v10-nv
 endef
-TARGET_DEVICES += openstick-sp970v11
+TARGET_DEVICES += openstick-sp970v10
 
 endif
