@@ -10,6 +10,10 @@ config GCC_VERSION_15
 	default y if GCC_USE_VERSION_15
 	bool
 
+config GCC_VERSION_14
+	default y if GCC_USE_VERSION_14
+	bool
+
 config GCC_VERSION
 	string
 	default EXTERNAL_GCC_VERSION	if EXTERNAL_TOOLCHAIN && !NATIVE_TOOLCHAIN
