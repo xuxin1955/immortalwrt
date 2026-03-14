@@ -27,7 +27,7 @@ define Package/checkpolicy
   SECTION:=utils
   CATEGORY:=Utilities
   TITLE:=SELinux policy compiler
-  URL:=https://github.com/selinuxproject
+  URL:=http://selinuxproject.org/page/Main_Page
 endef
 
 define Package/checkpolicy/description

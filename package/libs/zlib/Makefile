@@ -29,7 +29,7 @@ define Package/zlib
   SECTION:=libs
   CATEGORY:=Libraries
   TITLE:=Library implementing the deflate compression method
-  URL:=https://www.zlib.net/
+  URL:=http://www.zlib.net/
 endef
 
 define Package/zlib-dev

@@ -14,7 +14,6 @@
 		led-failsafe = &led_power;
 		led-running = &led_power;
 		led-upgrade = &led_power;
-		label-mac-device = &gmac0;
 		serial0 = &uart0;
 	};
 
@@ -213,18 +212,6 @@
 				label = "devinfo";
 				reg = <0x51c0000 0x40000>;
 				read-only;
-
-				nvmem-layout {
-					compatible = "ascii-eq-delim-env";
-					#address-cells = <1>;
-					#size-cells = <1>;
-
-					hw_mac_addr: hw_mac_addr {
-						compatible = "mac-base";
-
-						#nvmem-cell-cells = <1>;
-					};
-				};
 			};
 
 			partition@5200000 {
@@ -283,16 +270,6 @@
 			groups = "watchdog";
 		};
 	};
-};
-
-&gmac0 {
-	nvmem-cells = <&hw_mac_addr 0>;
-	nvmem-cell-names = "mac-address";
-};
-
-&gmac1 {
-	nvmem-cells = <&hw_mac_addr 0>;
-	nvmem-cell-names = "mac-address";
 };
 
 &ssusb {

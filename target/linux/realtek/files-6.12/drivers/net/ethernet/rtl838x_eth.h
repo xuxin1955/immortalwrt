@@ -5,74 +5,54 @@
 
 /* Register definition */
 
-#define RTETH_838X_CPU_PORT			28
-#define RTETH_838X_DMA_IF_INTR_MSK		(0x9f50)
-#define RTETH_838X_DMA_IF_INTR_STS		(0x9f54)
-#define RTETH_838X_MAC_FORCE_MODE_CTRL		(0xa104 + RTETH_838X_CPU_PORT * 4)
-#define RTETH_838X_MAC_L2_PORT_CTRL		(0xd560 + RTETH_838X_CPU_PORT * 128)
-#define RTETH_838X_QM_PKT2CPU_INTPRI_MAP	(0x5f10)
-#define RTETH_838X_QM_PKT2CPU_INTPRI_0		(0x5f04)
-#define RTETH_838X_QM_PKT2CPU_INTPRI_CNT	3
-
-#define RTETH_839X_CPU_PORT			52
-#define RTETH_839X_DMA_IF_INTR_MSK		(0x7864)
-#define RTETH_839X_DMA_IF_INTR_STS		(0x7868)
-#define RTETH_839X_MAC_FORCE_MODE_CTRL		(0x02bc + RTETH_839X_CPU_PORT * 4)
-#define RTETH_839X_MAC_L2_PORT_CTRL		(0x8004 + RTETH_839X_CPU_PORT * 128)
-#define RTETH_839X_QM_PKT2CPU_INTPRI_MAP	(0x1154)
-#define RTETH_839X_QM_PKT2CPU_INTPRI_0		(0x1148)
-#define RTETH_839X_QM_PKT2CPU_INTPRI_CNT	3
-
-#define RTETH_930X_CPU_PORT			28
-#define RTETH_930X_DMA_IF_INTR_MSK		(0xe010)
-#define RTETH_930X_DMA_IF_INTR_STS		(0xe01c)
-#define RTETH_930X_MAC_FORCE_MODE_CTRL		(0xca1c + RTETH_930X_CPU_PORT * 4)
-#define RTETH_930X_MAC_L2_PORT_CTRL		(0x3268 + RTETH_930X_CPU_PORT * 64)
-#define RTETH_930X_QM_RSN2CPUQID_CTRL_0		(0xa344)
-#define RTETH_930X_QM_RSN2CPUQID_CTRL_CNT	11
-
-#define RTETH_931X_CPU_PORT			56
-#define RTETH_931X_DMA_IF_INTR_MSK		(0x0910)
-#define RTETH_931X_DMA_IF_INTR_STS		(0x091c)
-#define RTETH_931X_MAC_FORCE_MODE_CTRL		(0x0dcc + RTETH_931X_CPU_PORT * 4)
-#define RTETH_931X_MAC_L2_PORT_CTRL		(0x6000 + RTETH_931X_CPU_PORT * 128)
-#define RTETH_931X_QM_RSN2CPUQID_CTRL_0		(0xa9f4)
-#define RTETH_931X_QM_RSN2CPUQID_CTRL_CNT	14
-
-/*
- * Reset
- */
-#define RTL838X_RST_GLB_CTRL_0			(0x003c)
-#define RTL839X_RST_GLB_CTRL			(0x0014)
-#define RTL930X_RST_GLB_CTRL_0			(0x000c)
-#define RTL931X_RST_GLB_CTRL			(0x0400)
-
-/* Switch interrupts */
-#define RTL839X_IMR_PORT_LINK_STS_CHG		(0x0068)
-#define RTL839X_ISR_PORT_LINK_STS_CHG		(0x00a0)
-
-/*
- * CPU port MAC control. On RTL93XX the functionality of the MAC port control register is
- * split into MAC_L2_PORT_CTRL and MAC_PORT_CTRL and the L2 register holds the important
- * bits for the driver. To avoid confusion on splitted models use the L2 naming convention
- * for all targets.
- */
+/* Per port MAC control */
+#define RTL838X_MAC_PORT_CTRL			(0xd560)
+#define RTL839X_MAC_PORT_CTRL			(0x8004)
+#define RTL930X_MAC_L2_PORT_CTRL		(0x3268)
+#define RTL930X_MAC_PORT_CTRL			(0x3260)
+#define RTL931X_MAC_L2_PORT_CTRL		(0x6000)
+#define RTL931X_MAC_PORT_CTRL			(0x6004)
 
 /* DMA interrupt control and status registers */
 #define RTL838X_DMA_IF_CTRL			(0x9f58)
+#define RTL838X_DMA_IF_INTR_STS			(0x9f54)
+#define RTL838X_DMA_IF_INTR_MSK			(0x9f50)
 
 #define RTL839X_DMA_IF_CTRL			(0x786c)
+#define RTL839X_DMA_IF_INTR_STS			(0x7868)
+#define RTL839X_DMA_IF_INTR_MSK			(0x7864)
 
 #define RTL930X_DMA_IF_CTRL			(0xe028)
+#define RTL930X_DMA_IF_INTR_RX_RUNOUT_STS	(0xe01C)
+#define RTL930X_DMA_IF_INTR_RX_DONE_STS		(0xe020)
+#define RTL930X_DMA_IF_INTR_TX_DONE_STS		(0xe024)
+#define RTL930X_DMA_IF_INTR_RX_RUNOUT_MSK	(0xe010)
+#define RTL930X_DMA_IF_INTR_RX_DONE_MSK		(0xe014)
+#define RTL930X_DMA_IF_INTR_TX_DONE_MSK		(0xe018)
 #define RTL930X_L2_NTFY_IF_INTR_MSK		(0xe04C)
 #define RTL930X_L2_NTFY_IF_INTR_STS		(0xe050)
 
 /* TODO: RTL931X_DMA_IF_CTRL has different bits meanings */
 #define RTL931X_DMA_IF_CTRL			(0x0928)
+#define RTL931X_DMA_IF_INTR_RX_RUNOUT_STS	(0x091c)
+#define RTL931X_DMA_IF_INTR_RX_DONE_STS		(0x0920)
+#define RTL931X_DMA_IF_INTR_TX_DONE_STS		(0x0924)
+#define RTL931X_DMA_IF_INTR_RX_RUNOUT_MSK	(0x0910)
+#define RTL931X_DMA_IF_INTR_RX_DONE_MSK		(0x0914)
+#define RTL931X_DMA_IF_INTR_TX_DONE_MSK		(0x0918)
 #define RTL931X_L2_NTFY_IF_INTR_MSK		(0x09E4)
 #define RTL931X_L2_NTFY_IF_INTR_STS		(0x09E8)
 
+#define RTL838X_MAC_FORCE_MODE_CTRL		(0xa104)
+#define RTL839X_MAC_FORCE_MODE_CTRL		(0x02bc)
+#define RTL930X_MAC_FORCE_MODE_CTRL		(0xCA1C)
+#define RTL931X_MAC_FORCE_MODE_CTRL		(0x0dcc)
+
 #define RTL839X_DMA_IF_INTR_NOTIFY_MASK		GENMASK(22, 20)
+#define RTL83XX_DMA_IF_INTR_RX_DONE_MASK	GENMASK(15, 8)
+#define RTL83XX_DMA_IF_INTR_RX_RUN_OUT_MASK	GENMASK(7, 0)
+#define RTL83XX_DMA_IF_INTR_RX_MASK(ring)	(BIT(ring) | BIT(ring + 8))
+#define RTL93XX_DMA_IF_INTR_RX_MASK(ring)	(BIT(ring))
 
 /* MAC address settings */
 #define RTL838X_MAC				(0xa9ec)
@@ -103,8 +83,21 @@
 #define RTL930X_DMA_IF_RX_RING_CNTR		(0x7C8C)
 #define RTL931X_DMA_IF_RX_RING_CNTR		(0x20AC)
 
+#define RTL838X_DMA_IF_RX_CUR			(0x9F20)
+#define RTL839X_DMA_IF_RX_CUR			(0x782c)
+#define RTL930X_DMA_IF_RX_CUR			(0xdf80)
+#define RTL931X_DMA_IF_RX_CUR			(0x0880)
+
 #define RTL838X_DMA_IF_TX_CUR_DESC_ADDR_CTRL	(0x9F48)
 #define RTL930X_DMA_IF_TX_CUR_DESC_ADDR_CTRL	(0xE008)
+
+#define RTL838X_DMY_REG31			(0x3b28)
+#define RTL838X_SDS_MODE_SEL			(0x0028)
+#define RTL838X_SDS_CFG_REG			(0x0034)
+#define RTL838X_INT_MODE_CTRL			(0x005c)
+#define RTL838X_SDS4_REG28			(0xef80)
+#define RTL838X_SDS4_DUMMY0			(0xef8c)
+#define RTL838X_SDS5_EXT_REG6			(0xf18c)
 
 /* L2 features */
 #define RTL839X_TBL_ACCESS_L2_CTRL		(0x1180)
@@ -146,10 +139,16 @@
 #define RTL930X_L2_UNKN_UC_FLD_PMSK		(0x9064)
 #define RTL931X_L2_UNKN_UC_FLD_PMSK		(0xC8F4)
 
+#define RTL839X_MAC_GLB_CTRL			(0x02a8)
+#define RTL839X_SCHED_LB_TICK_TKN_CTRL		(0x60f8)
+
 #define RTL838X_L2_TBL_FLUSH_CTRL		(0x3370)
 #define RTL839X_L2_TBL_FLUSH_CTRL		(0x3ba0)
 #define RTL930X_L2_TBL_FLUSH_CTRL		(0x9404)
 #define RTL931X_L2_TBL_FLUSH_CTRL		(0xCD9C)
+
+#define RTL930X_L2_PORT_SABLK_CTRL		(0x905c)
+#define RTL930X_L2_PORT_DABLK_CTRL		(0x9060)
 
 /* MAC link state bits */
 #define FORCE_EN				BIT(0)
@@ -193,6 +192,20 @@
 #define RTL931X_RMA_CTRL_1			(0x8804)
 #define RTL931X_RMA_CTRL_2			(0x8808)
 
+/* Advanced SMI control for clause 45 PHYs */
+#define RTL930X_SMI_MAC_TYPE_CTRL		(0xCA04)
+#define RTL930X_SMI_PORT24_27_ADDR_CTRL		(0xCB90)
+#define RTL930X_SMI_PORT0_15_POLLING_SEL	(0xCA08)
+#define RTL930X_SMI_PORT16_27_POLLING_SEL	(0xCA0C)
+
+#define RTL930X_SMI_10GPHY_POLLING_REG0_CFG	(0xCBB4)
+#define RTL930X_SMI_10GPHY_POLLING_REG9_CFG	(0xCBB8)
+#define RTL930X_SMI_10GPHY_POLLING_REG10_CFG	(0xCBBC)
+#define RTL930X_SMI_PRVTE_POLLING_CTRL		(0xCA10)
+
+/* Registers of the internal Serdes of the 8390 */
+#define RTL839X_SDS12_13_XSG0			(0xB800)
+
 /* Chip configuration registers of the RTL9310 */
 #define RTL931X_MEM_ENCAP_INIT			(0x4854)
 #define RTL931X_MEM_MIB_INIT			(0x7E18)
@@ -202,6 +215,12 @@
 #define RTL931X_MEM_ALE_INIT_2			(0x82E4)
 #define RTL931X_MDX_CTRL_RSVD			(0x0fcc)
 #define RTL931X_PS_SOC_CTRL			(0x13f8)
+#define RTL931X_SMI_10GPHY_POLLING_SEL2		(0xCF8)
+#define RTL931X_SMI_10GPHY_POLLING_SEL3		(0xCFC)
+#define RTL931X_SMI_10GPHY_POLLING_SEL4		(0xD00)
+
+/* Registers of the internal Serdes of the 8380 */
+#define RTL838X_SDS4_FIB_REG0			(0xF800)
 
 /* shared CPU tag definitions for RTL930X/RTL931X */
 #define RTL93XX_CPU_TAG1_FWD_MASK		GENMASK(11, 8)
@@ -220,6 +239,31 @@
 
 /* Default MTU with jumbo frames support */
 #define DEFAULT_MTU 9000
+
+inline int rtl838x_mac_port_ctrl(int p)
+{
+	return RTL838X_MAC_PORT_CTRL + (p << 7);
+}
+
+inline int rtl839x_mac_port_ctrl(int p)
+{
+	return RTL839X_MAC_PORT_CTRL + (p << 7);
+}
+
+/* On the RTL931XX, the functionality of the MAC port control register is split up
+ * into RTL931X_MAC_L2_PORT_CTRL and RTL931X_MAC_PORT_CTRL the functionality used
+ * by the Ethernet driver is in the same bits now in RTL931X_MAC_L2_PORT_CTRL
+ */
+
+inline int rtl930x_mac_port_ctrl(int p)
+{
+	return RTL930X_MAC_L2_PORT_CTRL + (p << 6);
+}
+
+inline int rtl931x_mac_port_ctrl(int p)
+{
+	return RTL931X_MAC_L2_PORT_CTRL + (p << 7);
+}
 
 inline int rtl838x_dma_if_rx_ring_size(int i)
 {
@@ -390,21 +434,18 @@ inline u32 rtl931x_get_mac_tx_pause_sts(int p)
 
 struct p_hdr;
 struct dsa_tag;
-struct rteth_ctrl;
-struct rteth_packet;
 
-struct rteth_config {
-	int family_id;
-	int cpu_port;
-	int rx_rings;
-	int tx_rx_enable;
-	int tx_trigger_mask;
-	int mac_l2_port_ctrl;
-	int qm_pkt2cpu_intpri_map;
-	int qm_rsn2cpuqid_ctrl;
-	int qm_rsn2cpuqid_cnt;
+struct rtl838x_eth_reg {
+	irqreturn_t (*net_irq)(int irq, void *dev_id);
+	int (*mac_port_ctrl)(int port);
 	int dma_if_intr_sts;
 	int dma_if_intr_msk;
+	int dma_if_intr_rx_runout_sts;
+	int dma_if_intr_rx_done_sts;
+	int dma_if_intr_tx_done_sts;
+	int dma_if_intr_rx_runout_msk;
+	int dma_if_intr_rx_done_msk;
+	int dma_if_intr_tx_done_msk;
 	int l2_ntfy_if_intr_sts;
 	int l2_ntfy_if_intr_msk;
 	int dma_if_ctrl;
@@ -413,6 +454,7 @@ struct rteth_config {
 	int dma_tx_base;
 	int (*dma_if_rx_ring_size)(int ring);
 	int (*dma_if_rx_ring_cntr)(int ring);
+	int dma_if_rx_cur;
 	int rst_glb_ctrl;
 	u32 (*get_mac_link_sts)(int port);
 	u32 (*get_mac_link_dup_sts)(int port);
@@ -421,12 +463,12 @@ struct rteth_config {
 	u32 (*get_mac_tx_pause_sts)(int port);
 	int mac;
 	int l2_tbl_flush_ctrl;
-	void (*create_tx_header)(struct rteth_packet *h, unsigned int dest_port, int prio);
-	bool (*decode_tag)(struct rteth_packet *h, struct dsa_tag *tag);
-	void (*hw_reset)(struct rteth_ctrl *ctrl);
-	int (*init_mac)(struct rteth_ctrl *ctrl);
-	void (*update_counter)(struct rteth_ctrl *ctrl, int ring, int released);
-	const struct net_device_ops *netdev_ops;
+	void (*update_cntr)(int r, int work_done);
+	void (*create_tx_header)(struct p_hdr *h, unsigned int dest_port, int prio);
+	bool (*decode_tag)(struct p_hdr *h, struct dsa_tag *tag);
 };
+
+/* TODO actually from arch/mips/rtl838x/prom.c */
+extern struct rtl83xx_soc_info soc_info;
 
 #endif /* _RTL838X_ETH_H */

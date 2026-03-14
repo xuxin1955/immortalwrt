@@ -28,7 +28,7 @@ define Package/refpolicy
   SECTION:=system
   CATEGORY:=Base system
   TITLE:=SELinux reference policy
-  URL:=https://github.com/selinuxproject
+  URL:=http://selinuxproject.org/page/Main_Page
   PKGARCH:=all
 endef
 

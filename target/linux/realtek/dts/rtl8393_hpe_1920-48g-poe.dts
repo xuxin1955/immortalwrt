@@ -98,32 +98,12 @@
 };
 
 &switch0 {
-	ethernet-ports {
-		SWITCH_PORT_SDS(48, 49, 12, qsgmii)
-		SWITCH_PORT_SDS(49, 50, 12, qsgmii)
-		SWITCH_PORT_SDS(50, 51, 12, qsgmii)
-		SWITCH_PORT_SDS(51, 52, 12, qsgmii)
+	ports {
+		SWITCH_PORT(48, 49, qsgmii)
+		SWITCH_PORT(49, 50, qsgmii)
+		SWITCH_PORT(50, 51, qsgmii)
+		SWITCH_PORT(51, 52, qsgmii)
 	};
-};
-
-&port48 {
-	nvmem-cells = <&macaddr_factory 50>;
-	nvmem-cell-names = "mac-address";
-};
-
-&port49 {
-	nvmem-cells = <&macaddr_factory 51>;
-	nvmem-cell-names = "mac-address";
-};
-
-&port50 {
-	nvmem-cells = <&macaddr_factory 52>;
-	nvmem-cell-names = "mac-address";
-};
-
-&port51 {
-	nvmem-cells = <&macaddr_factory 53>;
-	nvmem-cell-names = "mac-address";
 };
 
 &uart1 {

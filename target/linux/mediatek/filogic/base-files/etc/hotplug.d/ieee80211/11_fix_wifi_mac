@@ -33,11 +33,6 @@ case "$board" in
 		[ "$PHYNBR" = "0" ] && macaddr_add $hw_mac_addr 2 > /sys${DEVPATH}/macaddress
 		[ "$PHYNBR" = "1" ] && macaddr_add $hw_mac_addr 3 > /sys${DEVPATH}/macaddress
 		;;
-	airpi,ap3000m)
-		base_mac=$(macaddr_generate_from_mmc_cid mmcblk0)
-		[ "$PHYNBR" = "0" ] && macaddr_add $base_mac 2 > /sys${DEVPATH}/macaddress
-		[ "$PHYNBR" = "1" ] && macaddr_add $base_mac 3 > /sys${DEVPATH}/macaddress
-		;;
 	asus,rt-ax59u)
 		CI_UBIPART="UBI_DEV"
 		addr=$(mtd_get_mac_binary_ubi "Factory" 0x4)
@@ -80,7 +75,6 @@ case "$board" in
 		[ "$PHYNBR" = "1" ] && macaddr_add $addr 1 > /sys${DEVPATH}/macaddress
 		;;
 	cudy,ap3000outdoor-v1|\
-	cudy,ap3000wall-v1|\
 	cudy,ap3000-v1|\
 	cudy,m3000-v1|\
 	cudy,re3000-v1|\
@@ -144,11 +138,9 @@ case "$board" in
 	jdcloud,re-cp-03)
 		[ "$PHYNBR" = "1" ] && mmc_get_mac_binary factory 0xa > /sys${DEVPATH}/macaddress
 		;;
-	keenetic,kap-630|\
 	keenetic,kn-3711|\
 	keenetic,kn-3811|\
-	keenetic,kn-3911|\
-	netcraze,nap-630)
+	keenetic,kn-3911)
 		[ "$PHYNBR" = "1" ] && \
 			macaddr_setbit_la "$(mtd_get_mac_binary rf-eeprom 0x4)" > /sys${DEVPATH}/macaddress
 		;;
@@ -161,7 +153,6 @@ case "$board" in
 		;;
 	mercusys,mr90x-v1|\
 	tplink,archer-ax80-v1|\
-	tplink,archer-ax80-v1-eu|\
 	tplink,be450|\
 	tplink,re6000xd)
 		addr=$(get_mac_binary "/tmp/tp_data/default-mac" 0)
@@ -173,8 +164,7 @@ case "$board" in
 		[ "$PHYNBR" = "0" ] && macaddr_add $hw_mac_addr 2 > /sys${DEVPATH}/macaddress
 		[ "$PHYNBR" = "1" ] && macaddr_add $hw_mac_addr 3 > /sys${DEVPATH}/macaddress
 		;;
-	netis,nx31|\
-	netis,nx32u)
+	netis,nx31)
 		addr=$(mtd_get_mac_binary "Factory" 0x4)
 		addr=$(macaddr_unsetbit $(macaddr_setbit_la $addr) 25)
 		addr_2g=$(macaddr_unsetbit $(macaddr_unsetbit $addr 26) 27)
@@ -202,11 +192,6 @@ case "$board" in
 		[ "$PHYNBR" = "0" ] && macaddr_add $addr 2 > /sys${DEVPATH}/macaddress
 		[ "$PHYNBR" = "1" ] && macaddr_add $addr 3 > /sys${DEVPATH}/macaddress
 		;;
-	tplink,eap683-lr)
-		addr=$(get_mac_label)
-		[ "$PHYNBR" = "0" ] && echo $addr > /sys${DEVPATH}/macaddress
-		[ "$PHYNBR" = "1" ] && macaddr_add $addr 1 > /sys${DEVPATH}/macaddress
-		;;
 	tplink,fr365-v1)
 		addr=$(strings /dev/mtd11 | grep 'option macaddr' | awk -F"'" '{print $2}')
 		[ "$PHYNBR" = "0" ] && echo $addr > /sys${DEVPATH}/macaddress
@@ -223,7 +208,8 @@ case "$board" in
 	routerich,ax3000|\
 	routerich,ax3000-ubootmod|\
 	zbtlink,zbt-z8102ax|\
-	zbtlink,zbt-z8102ax-v2)
+	zbtlink,zbt-z8102ax-v2|\
+	zbtlink,zbt-z8103ax)
 		addr=$(mtd_get_mac_binary "Factory" 0x4)
 		[ "$PHYNBR" = "1" ] && macaddr_add $addr 1 > /sys${DEVPATH}/macaddress
 		;;

@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-2.0-only
 
-#include <asm/mach-rtl-otto/mach-rtl-otto.h>
+#include <asm/mach-rtl838x/mach-rtl83xx.h>
 #include <linux/etherdevice.h>
 
 #include "rtl83xx.h"
@@ -115,104 +115,6 @@ static enum template_field_id fixed_templates[N_FIXED_TEMPLATES][N_FIXED_FIELDS_
 	},
 };
 
-const struct rtldsa_mib_list_item rtldsa_931x_mib_list[] = {
-	MIB_LIST_ITEM("ifOutDiscards", MIB_ITEM(MIB_TBL_STD, 36, 1)),
-	MIB_LIST_ITEM("dot1dTpPortInDiscards", MIB_ITEM(MIB_TBL_STD, 35, 1)),
-	MIB_LIST_ITEM("DropEvents", MIB_ITEM(MIB_TBL_STD, 25, 1)),
-	MIB_LIST_ITEM("tx_BroadcastPkts", MIB_ITEM(MIB_TBL_STD, 24, 1)),
-	MIB_LIST_ITEM("tx_MulticastPkts", MIB_ITEM(MIB_TBL_STD, 23, 1)),
-	MIB_LIST_ITEM("tx_CRCAlignErrors", MIB_ITEM(MIB_TBL_STD, 22, 1)),
-	MIB_LIST_ITEM("tx_UndersizePkts", MIB_ITEM(MIB_TBL_STD, 20, 1)),
-	MIB_LIST_ITEM("tx_OversizePkts", MIB_ITEM(MIB_TBL_STD, 18, 1)),
-	MIB_LIST_ITEM("tx_Fragments", MIB_ITEM(MIB_TBL_STD, 16, 1)),
-	MIB_LIST_ITEM("tx_Jabbers", MIB_ITEM(MIB_TBL_STD, 14, 1)),
-	MIB_LIST_ITEM("tx_Collisions", MIB_ITEM(MIB_TBL_STD, 12, 1)),
-
-	MIB_LIST_ITEM("rx_UndersizeDropPkts", MIB_ITEM(MIB_TBL_PRV, 27, 1)),
-	MIB_LIST_ITEM("tx_PktsFlexibleOctetsSet1", MIB_ITEM(MIB_TBL_PRV, 22, 1)),
-	MIB_LIST_ITEM("rx_PktsFlexibleOctetsSet1", MIB_ITEM(MIB_TBL_PRV, 21, 1)),
-	MIB_LIST_ITEM("tx_PktsFlexibleOctetsCRCSet1", MIB_ITEM(MIB_TBL_PRV, 28, 1)),
-	MIB_LIST_ITEM("rx_PktsFlexibleOctetsCRCSet1", MIB_ITEM(MIB_TBL_PRV, 27, 1)),
-	MIB_LIST_ITEM("tx_PktsFlexibleOctetsSet0", MIB_ITEM(MIB_TBL_PRV, 18, 1)),
-	MIB_LIST_ITEM("rx_PktsFlexibleOctetsSet0", MIB_ITEM(MIB_TBL_PRV, 17, 1)),
-	MIB_LIST_ITEM("tx_PktsFlexibleOctetsCRCSet0", MIB_ITEM(MIB_TBL_PRV, 16, 1)),
-	MIB_LIST_ITEM("rx_PktsFlexibleOctetsCRCSet0", MIB_ITEM(MIB_TBL_PRV, 15, 1)),
-	MIB_LIST_ITEM("LengthFieldError", MIB_ITEM(MIB_TBL_PRV, 14, 1)),
-	MIB_LIST_ITEM("FalseCarrierTimes", MIB_ITEM(MIB_TBL_PRV, 13, 1)),
-	MIB_LIST_ITEM("UndersizeOctets", MIB_ITEM(MIB_TBL_PRV, 12, 1)),
-	MIB_LIST_ITEM("FramingErrors", MIB_ITEM(MIB_TBL_PRV, 11, 1)),
-	MIB_LIST_ITEM("rx_MacDiscards", MIB_ITEM(MIB_TBL_PRV, 9, 1)),
-	MIB_LIST_ITEM("rx_MacIPGShortDrop", MIB_ITEM(MIB_TBL_PRV, 8, 1))
-};
-
-const struct rtldsa_mib_desc rtldsa_931x_mib_desc = {
-	.symbol_errors = MIB_ITEM(MIB_TBL_STD, 29, 1),
-
-	.if_in_octets = MIB_ITEM(MIB_TBL_STD, 51, 2),
-	.if_out_octets = MIB_ITEM(MIB_TBL_STD, 49, 2),
-	.if_in_ucast_pkts = MIB_ITEM(MIB_TBL_STD, 47, 2),
-	.if_in_mcast_pkts = MIB_ITEM(MIB_TBL_STD, 45, 2),
-	.if_in_bcast_pkts = MIB_ITEM(MIB_TBL_STD, 43, 2),
-	.if_out_ucast_pkts = MIB_ITEM(MIB_TBL_STD, 41, 2),
-	.if_out_mcast_pkts = MIB_ITEM(MIB_TBL_STD, 39, 2),
-	.if_out_bcast_pkts = MIB_ITEM(MIB_TBL_STD, 37, 2),
-	.if_out_discards = MIB_ITEM(MIB_TBL_STD, 36, 1),
-	.single_collisions = MIB_ITEM(MIB_TBL_STD, 35, 1),
-	.multiple_collisions = MIB_ITEM(MIB_TBL_STD, 33, 1),
-	.deferred_transmissions = MIB_ITEM(MIB_TBL_STD, 32, 1),
-	.late_collisions = MIB_ITEM(MIB_TBL_STD, 31, 1),
-	.excessive_collisions = MIB_ITEM(MIB_TBL_STD, 30, 1),
-	.crc_align_errors = MIB_ITEM(MIB_TBL_STD, 21, 1),
-	.rx_pkts_over_max_octets = MIB_ITEM(MIB_TBL_PRV, 23, 1),
-
-	.unsupported_opcodes = MIB_ITEM(MIB_TBL_STD, 28, 1),
-
-	.rx_undersize_pkts = MIB_ITEM(MIB_TBL_STD, 19, 1),
-	.rx_oversize_pkts = MIB_ITEM(MIB_TBL_STD, 17, 1),
-	.rx_fragments = MIB_ITEM(MIB_TBL_STD, 15, 1),
-	.rx_jabbers = MIB_ITEM(MIB_TBL_STD, 13, 1),
-
-	.tx_pkts = {
-		MIB_ITEM(MIB_TBL_STD, 11, 1),
-		MIB_ITEM(MIB_TBL_STD, 9, 1),
-		MIB_ITEM(MIB_TBL_STD, 7, 1),
-		MIB_ITEM(MIB_TBL_STD, 5, 1),
-		MIB_ITEM(MIB_TBL_STD, 3, 1),
-		MIB_ITEM(MIB_TBL_STD, 1, 1),
-		MIB_ITEM(MIB_TBL_PRV, 26, 1),
-		MIB_ITEM(MIB_TBL_PRV, 24, 1)
-	},
-	.rx_pkts = {
-		MIB_ITEM(MIB_TBL_STD, 10, 1),
-		MIB_ITEM(MIB_TBL_STD, 8, 1),
-		MIB_ITEM(MIB_TBL_STD, 6, 1),
-		MIB_ITEM(MIB_TBL_STD, 4, 1),
-		MIB_ITEM(MIB_TBL_STD, 2, 1),
-		MIB_ITEM(MIB_TBL_STD, 0, 1),
-		MIB_ITEM(MIB_TBL_PRV, 25, 1),
-		MIB_ITEM(MIB_TBL_PRV, 23, 1),
-	},
-	.rmon_ranges = {
-		{ 0, 64 },
-		{ 65, 127 },
-		{ 128, 255 },
-		{ 256, 511 },
-		{ 512, 1023 },
-		{ 1024, 1518 },
-		{ 1519, 12288 },
-		{ 12289, 65535 }
-	},
-
-	.drop_events = MIB_ITEM(MIB_TBL_STD, 25, 1),
-	.collisions = MIB_ITEM(MIB_TBL_STD, 12, 1),
-
-	.rx_pause_frames = MIB_ITEM(MIB_TBL_STD, 27, 1),
-	.tx_pause_frames = MIB_ITEM(MIB_TBL_STD, 26, 1),
-
-	.list_count = ARRAY_SIZE(rtldsa_931x_mib_list),
-	.list = rtldsa_931x_mib_list
-};
-
 inline void rtl931x_exec_tbl0_cmd(u32 cmd)
 {
 	sw_w32(cmd, RTL931X_TBL_ACCESS_CTRL_0);
@@ -230,57 +132,35 @@ inline int rtl931x_tbl_access_data_0(int i)
 	return RTL931X_TBL_ACCESS_DATA_0(i);
 }
 
-static int
-rtldsa_931x_vlan_profile_get(int idx, struct rtldsa_vlan_profile *profile)
+static void rtl931x_vlan_profile_dump(int index)
 {
-	u32 p[7];
+	u64 profile[4];
 
-	if (idx < 0 || idx > RTL931X_VLAN_PROFILE_MAX)
-		return -EINVAL;
-
-	for (int i = 0; i < 7; i++)
-		p[i] = sw_r32(RTL931X_VLAN_PROFILE_SET(idx) + i * 4);
-
-	*profile = (struct rtldsa_vlan_profile) {
-		.l2_learn = RTL931X_VLAN_L2_LEARN_EN_R(p),
-		.unkn_mc_fld.pmsks = {
-			.l2 = RTL931X_VLAN_L2_UNKN_MC_FLD_PMSK(p),
-			.ip = RTL931X_VLAN_IP4_UNKN_MC_FLD_PMSK(p),
-			.ip6 = RTL931X_VLAN_IP6_UNKN_MC_FLD_PMSK(p),
-		},
-	};
-
-	return 0;
-}
-
-static void
-rtldsa_931x_vlan_profile_dump(struct rtl838x_switch_priv *priv, int idx)
-{
-	struct rtldsa_vlan_profile p;
-
-	if (rtldsa_931x_vlan_profile_get(idx, &p) < 0)
+	if (index < 0 || index > 15)
 		return;
 
-	dev_dbg(priv->dev,
-		"VLAN %d: L2 learning: %d, L2 Unknown MultiCast Field %llx, IPv4 Unknown MultiCast Field %llx, IPv6 Unknown MultiCast Field: %llx\n",
-		idx, p.l2_learn, p.unkn_mc_fld.pmsks.l2,
-		p.unkn_mc_fld.pmsks.ip, p.unkn_mc_fld.pmsks.ip6);
+	profile[0] = sw_r32(RTL931X_VLAN_PROFILE_SET(index));
+	profile[1] = (sw_r32(RTL931X_VLAN_PROFILE_SET(index) + 4) & 0x1FFFFFFFULL) << 32 |
+		     (sw_r32(RTL931X_VLAN_PROFILE_SET(index) + 8) & 0xFFFFFFFF);
+	profile[2] = (sw_r32(RTL931X_VLAN_PROFILE_SET(index) + 16) & 0x1FFFFFFFULL) << 32 |
+		     (sw_r32(RTL931X_VLAN_PROFILE_SET(index) + 12) & 0xFFFFFFFF);
+	profile[3] = (sw_r32(RTL931X_VLAN_PROFILE_SET(index) + 20) & 0x1FFFFFFFULL) << 32 |
+		     (sw_r32(RTL931X_VLAN_PROFILE_SET(index) + 24) & 0xFFFFFFFF);
+
+	pr_debug("VLAN %d: L2 learning: %d, L2 Unknown MultiCast Field %llx, IPv4 Unknown MultiCast Field %llx, IPv6 Unknown MultiCast Field: %llx\n",
+		 index, (u32)(profile[0] & (3 << 14)), profile[1], profile[2], profile[3]);
 }
 
-static int rtldsa_931x_stp_get(struct rtl838x_switch_priv *priv, u16 msti, int port, u32 port_state[])
+static void rtl931x_stp_get(struct rtl838x_switch_priv *priv, u16 msti, u32 port_state[])
 {
-	int idx = 3 - ((port + 8) / 16);
-	int bit = 2 * ((port + 8) % 16);
 	u32 cmd = 1 << 20 | /* Execute cmd */
 		  0 << 19 | /* Read */
 		  5 << 15 | /* Table type 0b101 */
 		  (msti & 0x3fff);
-
 	priv->r->exec_tbl0_cmd(cmd);
+
 	for (int i = 0; i < 4; i++)
 		port_state[i] = sw_r32(priv->r->tbl_access_data_0(i));
-
-	return (port_state[idx] >> bit) & 3;
 }
 
 static void rtl931x_stp_set(struct rtl838x_switch_priv *priv, u16 msti, u32 port_state[])
@@ -493,7 +373,7 @@ irqreturn_t rtl931x_switch_irq(int irq, void *dev_id)
 	return IRQ_HANDLED;
 }
 
-void rtldsa_931x_print_matrix(void)
+void rtl931x_print_matrix(void)
 {
 	struct table_reg *r = rtl_table_get(RTL9310_TBL_2, 1);
 
@@ -920,12 +800,12 @@ static void rtl931x_vlan_profile_setup(int profile)
 	/* p[0] |= BIT(17) | BIT(16) | BIT(13) | BIT(12); */
 	p[0] |= 0x3 << 11; /* COPY2CPU */
 
-	p[1] = RTL931X_VLAN_L2_UNKN_MC_FLD_H(RTL931X_MC_PMASK_ALL_PORTS);
-	p[2] = RTL931X_VLAN_L2_UNKN_MC_FLD_L(RTL931X_MC_PMASK_ALL_PORTS);
-	p[3] = RTL931X_VLAN_IP4_UNKN_MC_FLD_H(RTL931X_MC_PMASK_ALL_PORTS);
-	p[4] = RTL931X_VLAN_IP4_UNKN_MC_FLD_L(RTL931X_MC_PMASK_ALL_PORTS);
-	p[5] = RTL931X_VLAN_IP6_UNKN_MC_FLD_H(RTL931X_MC_PMASK_ALL_PORTS);
-	p[6] = RTL931X_VLAN_IP6_UNKN_MC_FLD_L(RTL931X_MC_PMASK_ALL_PORTS);
+	p[1] = 0x1FFFFFF; /* L2 unknwon MC flooding portmask all ports, including the CPU-port */
+	p[2] = 0xFFFFFFFF;
+	p[3] = 0x1FFFFFF; /* IPv4 unknwon MC flooding portmask */
+	p[4] = 0xFFFFFFFF;
+	p[5] = 0x1FFFFFF; /* IPv6 unknwon MC flooding portmask */
+	p[6] = 0xFFFFFFFF;
 
 	for (int i = 0; i < 7; i++)
 		sw_w32(p[i], RTL931X_VLAN_PROFILE_SET(profile) + i * 4);
@@ -935,10 +815,10 @@ static void rtl931x_vlan_profile_setup(int profile)
 static void rtl931x_l2_learning_setup(void)
 {
 	/* Portmask for flooding broadcast traffic */
-	rtl839x_set_port_reg_be(RTL931X_MC_PMASK_ALL_PORTS, RTL931X_L2_BC_FLD_PMSK);
+	rtl839x_set_port_reg_be(0x1FFFFFFFFFFFFFF, RTL931X_L2_BC_FLD_PMSK);
 
 	/* Portmask for flooding unicast traffic with unknown destination */
-	rtl839x_set_port_reg_be(RTL931X_MC_PMASK_ALL_PORTS, RTL931X_L2_UNKN_UC_FLD_PMSK);
+	rtl839x_set_port_reg_be(0x1FFFFFFFFFFFFFF, RTL931X_L2_UNKN_UC_FLD_PMSK);
 
 	/* Limit learning to maximum: 64k entries, after that just flood (bits 0-2) */
 	sw_w32((0xffff << 3) | FORWARD, RTL931X_L2_LRN_CONSTRT_CTRL);
@@ -1439,11 +1319,11 @@ static int rtl931x_pie_rule_add(struct rtl838x_switch_priv *priv, struct pie_rul
 {
 	int idx, block, j;
 	int min_block = 0;
-	int max_block = priv->r->n_pie_blocks / 2;
+	int max_block = priv->n_pie_blocks / 2;
 
 	if (pr->is_egress) {
 		min_block = max_block;
-		max_block = priv->r->n_pie_blocks;
+		max_block = priv->n_pie_blocks;
 	}
 	pr_debug("In %s\n", __func__);
 
@@ -1464,7 +1344,7 @@ static int rtl931x_pie_rule_add(struct rtl838x_switch_priv *priv, struct pie_rul
 			break;
 	}
 
-	if (block >= priv->r->n_pie_blocks) {
+	if (block >= priv->n_pie_blocks) {
 		mutex_unlock(&priv->pie_mutex);
 		return -EOPNOTSUPP;
 	}
@@ -1528,18 +1408,18 @@ static void rtl931x_pie_init(struct rtl838x_switch_priv *priv)
 	sw_w32_mask(0, 1, RTL931X_METER_GLB_CTRL);
 
 	/* Delete all present rules, block size is 128 on all SoC families */
-	rtl931x_pie_rule_del(priv, 0, priv->r->n_pie_blocks * 128 - 1);
+	rtl931x_pie_rule_del(priv, 0, priv->n_pie_blocks * 128 - 1);
 
 	/* Assign first half blocks 0-7 to VACL phase, second half to IACL */
 	/* 3 bits are used for each block, values for PIE blocks are */
 	/* 6: Disabled, 0: VACL, 1: IACL, 2: EACL */
 	/* And for OpenFlow Flow blocks: 3: Ingress Flow table 0, */
 	/* 4: Ingress Flow Table 3, 5: Egress flow table 0 */
-	for (int i = 0; i < priv->r->n_pie_blocks; i++) {
+	for (int i = 0; i < priv->n_pie_blocks; i++) {
 		int pos = (i % 10) * 3;
 		u32 r = RTL931X_PIE_BLK_PHASE_CTRL + 4 * (i / 10);
 
-		if (i < priv->r->n_pie_blocks / 2)
+		if (i < priv->n_pie_blocks / 2)
 			sw_w32_mask(0x7 << pos, 0, r);
 		else
 			sw_w32_mask(0x7 << pos, 1 << pos, r);
@@ -1547,22 +1427,22 @@ static void rtl931x_pie_init(struct rtl838x_switch_priv *priv)
 
 	/* Enable predefined templates 0, 1 for first quarter of all blocks */
 	template_selectors = 0 | (1 << 4);
-	for (int i = 0; i < priv->r->n_pie_blocks / 4; i++)
+	for (int i = 0; i < priv->n_pie_blocks / 4; i++)
 		sw_w32(template_selectors, RTL931X_PIE_BLK_TMPLTE_CTRL(i));
 
 	/* Enable predefined templates 2, 3 for second quarter of all blocks */
 	template_selectors = 2 | (3 << 4);
-	for (int i = priv->r->n_pie_blocks / 4; i < priv->r->n_pie_blocks / 2; i++)
+	for (int i = priv->n_pie_blocks / 4; i < priv->n_pie_blocks / 2; i++)
 		sw_w32(template_selectors, RTL931X_PIE_BLK_TMPLTE_CTRL(i));
 
 	/* Enable predefined templates 0, 1 for third quater of all blocks */
 	template_selectors = 0 | (1 << 4);
-	for (int i = priv->r->n_pie_blocks / 2; i < priv->r->n_pie_blocks * 3 / 4; i++)
+	for (int i = priv->n_pie_blocks / 2; i < priv->n_pie_blocks * 3 / 4; i++)
 		sw_w32(template_selectors, RTL931X_PIE_BLK_TMPLTE_CTRL(i));
 
 	/* Enable predefined templates 2, 3 for fourth quater of all blocks */
 	template_selectors = 2 | (3 << 4);
-	for (int i = priv->r->n_pie_blocks * 3 / 4; i < priv->r->n_pie_blocks; i++)
+	for (int i = priv->n_pie_blocks * 3 / 4; i < priv->n_pie_blocks; i++)
 		sw_w32(template_selectors, RTL931X_PIE_BLK_TMPLTE_CTRL(i));
 }
 
@@ -1591,20 +1471,17 @@ static void rtl931x_vlan_port_pvid_set(int port, enum pbvlan_type type, int pvid
 		sw_w32_mask(0xfff << 14, pvid << 14, RTL931X_VLAN_PORT_IGR_CTRL + (port << 2));
 }
 
-static int rtldsa_931x_fast_age(struct rtl838x_switch_priv *priv, int port, int vid)
+static int rtldsa_931x_vlan_port_fast_age(struct rtl838x_switch_priv *priv, int port, u16 vid)
 {
 	u32 val;
 
-	sw_w32(0, RTL931X_L2_TBL_FLUSH_CTRL + 4);
+	sw_w32(vid << 20, RTL931X_L2_TBL_FLUSH_CTRL + 4);
 
 	val = 0;
 	val |= port << 11;
 	val |= BIT(24); /* compare port id */
+	val |= BIT(26); /* compare VID */
 	val |= BIT(28); /* status - trigger flush */
-	if (vid >= 0) {
-		sw_w32(vid << 20, RTL931X_L2_TBL_FLUSH_CTRL + 4);
-		val |= BIT(26); /* compare VID */
-	}
 	sw_w32(val, RTL931X_L2_TBL_FLUSH_CTRL);
 
 	do { } while (sw_r32(RTL931X_L2_TBL_FLUSH_CTRL) & BIT(28));
@@ -1887,7 +1764,7 @@ static void rtldsa_931x_qos_init(struct rtl838x_switch_priv *priv)
 	rtldsa_931x_qos_set_scheduling_queue_weights(priv);
 }
 
-const struct rtldsa_config rtldsa_931x_cfg = {
+const struct rtl838x_reg rtl931x_reg = {
 	.mask_port_reg_be = rtl839x_mask_port_reg_be,
 	.set_port_reg_be = rtl839x_set_port_reg_be,
 	.get_port_reg_be = rtl839x_get_port_reg_be,
@@ -1897,7 +1774,6 @@ const struct rtldsa_config rtldsa_931x_cfg = {
 	.stat_port_rst = RTL931X_STAT_PORT_RST,
 	.stat_rst = RTL931X_STAT_RST,
 	.stat_port_std_mib = 0,  /* Not defined */
-	.mib_desc = &rtldsa_931x_mib_desc,
 	.stat_port_table_read = rtldsa_931x_stat_port_table_read,
 	.stat_counters_lock = rtldsa_counters_lock_table,
 	.stat_counters_unlock = rtldsa_counters_unlock_table,
@@ -1918,17 +1794,13 @@ const struct rtldsa_config rtldsa_931x_cfg = {
 	.isr_port_link_sts_chg = RTL931X_ISR_PORT_LINK_STS_CHG,
 	.imr_port_link_sts_chg = RTL931X_IMR_PORT_LINK_STS_CHG,
 	/* imr_glb does not exist on RTL931X */
-	.n_counters = 2048,
-	.n_pie_blocks = 16,
-	.port_ignore = 0x3f,
 	.vlan_tables_read = rtl931x_vlan_tables_read,
 	.vlan_set_tagged = rtl931x_vlan_set_tagged,
 	.vlan_set_untagged = rtl931x_vlan_set_untagged,
-	.vlan_profile_get = rtldsa_931x_vlan_profile_get,
-	.vlan_profile_dump = rtldsa_931x_vlan_profile_dump,
+	.vlan_profile_dump = rtl931x_vlan_profile_dump,
 	.vlan_profile_setup = rtl931x_vlan_profile_setup,
 	.vlan_fwd_on_inner = rtl931x_vlan_fwd_on_inner,
-	.stp_get = rtldsa_931x_stp_get,
+	.stp_get = rtl931x_stp_get,
 	.stp_set = rtl931x_stp_set,
 	.mac_force_mode_ctrl = rtl931x_mac_force_mode_ctrl,
 	.mac_port_ctrl = rtl931x_mac_port_ctrl,
@@ -1937,7 +1809,6 @@ const struct rtldsa_config rtldsa_931x_cfg = {
 	.get_mirror_config = rtldsa_931x_get_mirror_config,
 	.port_rate_police_add = rtldsa_931x_port_rate_police_add,
 	.port_rate_police_del = rtldsa_931x_port_rate_police_del,
-	.print_matrix = rtldsa_931x_print_matrix,
 	.read_l2_entry_using_hash = rtl931x_read_l2_entry_using_hash,
 	.write_l2_entry_using_hash = rtl931x_write_l2_entry_using_hash,
 	.read_cam = rtl931x_read_cam,
@@ -1945,7 +1816,7 @@ const struct rtldsa_config rtldsa_931x_cfg = {
 	.vlan_port_keep_tag_set = rtl931x_vlan_port_keep_tag_set,
 	.vlan_port_pvidmode_set = rtl931x_vlan_port_pvidmode_set,
 	.vlan_port_pvid_set = rtl931x_vlan_port_pvid_set,
-	.fast_age = rtldsa_931x_fast_age,
+	.vlan_port_fast_age = rtldsa_931x_vlan_port_fast_age,
 	.trk_mbr_ctr = rtldsa_931x_trk_mbr_ctr,
 	.rma_bpdu_fld_pmask = RTL931X_RMA_BPDU_FLD_PMSK,
 	.set_vlan_igr_filter = rtl931x_set_igr_filter,

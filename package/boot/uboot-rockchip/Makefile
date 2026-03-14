@@ -5,9 +5,9 @@
 include $(TOPDIR)/rules.mk
 include $(INCLUDE_DIR)/kernel.mk
 
-PKG_VERSION:=2026.01
+PKG_VERSION:=2025.10
 PKG_RELEASE:=1
-PKG_HASH:=b60d5865cefdbc75da8da4156c56c458e00de75a49b80c1a2e58a96e30ad0d54
+PKG_HASH:=b4f032848e56cc8f213ad59f9132c084dbbb632bc29176d024e58220e0efdf4a
 
 PKG_MAINTAINER:=Sarah Maedel <openwrt@tbspace.de>
 
@@ -591,22 +591,12 @@ UBOOT_MAKE_FLAGS += \
   BL31=$(STAGING_DIR_IMAGE)/$(ATF) \
   $(if $(TPL),ROCKCHIP_TPL=$(STAGING_DIR_IMAGE)/$(TPL))
 
-define Build/Configure
-	$(call Build/Configure/U-Boot)
-
-ifneq ($(filter %rk3576,$(BUILD_VARIANT)),)
-	$(TARGET_CC) -nostdlib -ffreestanding -Os -S -o $(PKG_BUILD_DIR)/rk3576-boost.S $(PKG_BUILD_DIR)/rk3576-boost.c
-	$(TARGET_CROSS)as -o $(PKG_BUILD_DIR)/rk3576-boost.o $(PKG_BUILD_DIR)/rk3576-boost.S
-	$(TARGET_CROSS)objcopy -O binary -j .text $(PKG_BUILD_DIR)/rk3576-boost.o $(PKG_BUILD_DIR)/rk3576-boost.bin
-endif
-endef
-
 define Build/InstallDev
 	$(INSTALL_DIR) $(STAGING_DIR_IMAGE)
 ifneq ($(TPL),)
 	$(CP) $(PKG_BUILD_DIR)/u-boot-rockchip.bin $(STAGING_DIR_IMAGE)/$(BUILD_VARIANT)-u-boot-rockchip.bin
 else
-	$(STAGING_DIR_IMAGE)/loaderimage --pack --uboot $(PKG_BUILD_DIR)/u-boot-dtb.bin $(PKG_BUILD_DIR)/uboot.img 0x800000
+	$(STAGING_DIR_IMAGE)/loaderimage --pack --uboot $(PKG_BUILD_DIR)/u-boot-dtb.bin $(PKG_BUILD_DIR)/uboot.img 0x200000
 	$(CP) $(PKG_BUILD_DIR)/uboot.img $(STAGING_DIR_IMAGE)/$(BUILD_VARIANT)-uboot.img
 endif
 endef

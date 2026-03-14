@@ -8,7 +8,7 @@
 };
 
 &switch0 {
-	ethernet-ports {
+	ports {
 		port24: port@24 {
 			reg = <24>;
 			label = "lan-sfp2";

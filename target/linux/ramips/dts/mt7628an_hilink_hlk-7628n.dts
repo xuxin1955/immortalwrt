@@ -4,6 +4,7 @@
 
 #include <dt-bindings/gpio/gpio.h>
 #include <dt-bindings/input/input.h>
+#include <dt-bindings/leds/common.h>
 
 / {
 	compatible = "hilink,hlk-7628n", "mediatek,mt7628an-soc";
@@ -23,45 +24,18 @@
 		compatible = "gpio-leds";
 
 		wlan {
-			label = "green:wlan";
+			function = LED_FUNCTION_WLAN;
+			color = <LED_COLOR_ID_GREEN>;
 			gpios = <&gpio 44 GPIO_ACTIVE_LOW>;
-		};
-		led1 {
-			label = "led1";
-			gpios = <&gpio 42 GPIO_ACTIVE_LOW>;
-		};
-		led2 {
-			label = "led2";
-			gpios = <&gpio 41 GPIO_ACTIVE_LOW>;
-		};
-		led3 {
-			label = "led3";
-			gpios = <&gpio 40 GPIO_ACTIVE_LOW>;
-		};
-		led4 {
-			label = "led4";
-			gpios = <&gpio 39 GPIO_ACTIVE_LOW>;
 		};
 	};
 };
 
 &state_default {
 	gpio {
-		groups = "refclk", "wdt", "wled_an", "p1led_an", "p2led_an","p3led_an", "p4led_an";
+		groups = "i2c";
 		function = "gpio";
 	};
-};
-
-&i2c {
-	status = "okay";
-};
-
-&i2s {
-	status = "okay";
-};
-
-&gdma {
-	status = "okay";
 };
 
 &uart1 {
@@ -71,13 +45,10 @@
 &spi0 {
 	status = "okay";
 
-	pinctrl-names = "default";
-	pinctrl-0 = <&spi_pins>, <&spi_cs1_pins>;
-
 	flash@0 {
 		compatible = "jedec,spi-nor";
 		reg = <0>;
-		spi-max-frequency = <40000000>;
+		spi-max-frequency = <10000000>;
 		broken-flash-reset;
 
 		partitions {
@@ -97,10 +68,24 @@
 				read-only;
 			};
 
-			factory: partition@40000 {
+			partition@40000 {
 				label = "factory";
 				reg = <0x40000 0x10000>;
 				read-only;
+
+				nvmem-layout {
+					compatible = "fixed-layout";
+					#address-cells = <1>;
+					#size-cells = <1>;
+
+					eeprom_factory_0: eeprom@0 {
+						reg = <0x0 0x400>;
+					};
+
+					macaddr_factory_28: macaddr@28 {
+						reg = <0x28 0x6>;
+					};
+				};
 			};
 
 			partition@50000 {
@@ -113,9 +98,13 @@
 };
 
 &ethernet {
-	mtd-mac-address = <&factory 0x28>;
+	nvmem-cells = <&macaddr_factory_28>;
+	nvmem-cell-names = "mac-address";
 };
 
 &wmac {
 	status = "okay";
+
+	nvmem-cells = <&eeprom_factory_0>;
+	nvmem-cell-names = "eeprom";
 };

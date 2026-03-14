@@ -9,9 +9,9 @@
 };
 
 &phy24 {
-	realtek,smi-address = <1>;
+	rtl9300,smi-address = <1 1>;
 };
 
 &phy25 {
-	realtek,smi-address = <2>;
+	rtl9300,smi-address = <2 2>;
 };

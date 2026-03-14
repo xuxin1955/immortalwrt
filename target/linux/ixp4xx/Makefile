@@ -24,7 +24,6 @@ include $(INCLUDE_DIR)/target.mk
 DEFAULT_PACKAGES += fconfig \
 	kmod-crypto-hw-ixp4xx \
 	kmod-usb-ledtrig-usbport \
-	kmod-leds-gpio \
-	kmod-input-gpio-keys
+	kmod-leds-gpio
 
 $(eval $(call BuildTarget))

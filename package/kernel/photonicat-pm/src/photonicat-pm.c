@@ -4,7 +4,6 @@
  */
 
 #include <linux/init.h>
-#include <linux/version.h>
 #include <linux/kernel.h>
 #include <linux/module.h>
 #include <linux/mod_devicetable.h>
@@ -559,10 +558,6 @@ static void pcat_pm_uart_cmd_exec(struct pcat_pm_data *pm_data,
 		pm_data->poweroff_ok = true;
 		need_ack = false;
 		break;
-	case PCAT_PM_COMMAND_PMU_REQUEST_SHUTDOWN:
-		dev_info(&pm_data->serdev->dev, "PMU request shutdown.");
-		orderly_poweroff(true);
-		break;
 	case PCAT_PM_COMMAND_STATUS_REPORT:
 		pcat_pm_status_report_parse(
 			pm_data, extra_data, extra_data_len);
@@ -805,13 +800,8 @@ static int pcat_pm_uart_serdev_open(struct pcat_pm_data *pm_data)
 	sched_set_fifo(pm_data->kworker->task);
 		
 	kthread_init_work(&pm_data->check_work, pcat_pm_check_work);
-
-#if LINUX_VERSION_CODE >= KERNEL_VERSION(6, 13, 0)
-	hrtimer_setup(&pm_data->check_timer, pcat_pm_check_timer_expired, CLOCK_MONOTONIC, HRTIMER_MODE_REL_HARD);
-#else
 	hrtimer_init(&pm_data->check_timer, CLOCK_MONOTONIC, HRTIMER_MODE_REL_HARD);
 	pm_data->check_timer.function = pcat_pm_check_timer_expired;
-#endif
 	
 	hrtimer_start(&pm_data->check_timer, ms_to_ktime(1000), HRTIMER_MODE_REL_HARD);
 	
@@ -847,7 +837,7 @@ static int pcat_pm_charger_probe(struct pcat_pm_data *pm_data)
 	}
 	
 	pscfg.drv_data = pm_data;
-	pscfg.fwnode = of_fwnode_handle(charger_node);
+	pscfg.of_node = charger_node;
 
 	pm_data->battery_psy = power_supply_register(dev, battery_psy_desc, &pscfg);
 	if (IS_ERR(pm_data->battery_psy)) {
@@ -1219,10 +1209,6 @@ static void pcat_pm_ctl_cmd_exec(struct pcat_pm_data *pm_data,
 	case PCAT_PM_COMMAND_HOST_REQUEST_SHUTDOWN:
 		break;
 	case PCAT_PM_COMMAND_HOST_REQUEST_SHUTDOWN_ACK:
-		break;
-	case PCAT_PM_COMMAND_PMU_REQUEST_SHUTDOWN:
-		break;
-	case PCAT_PM_COMMAND_PMU_REQUEST_SHUTDOWN_ACK:
 		break;
 	case PCAT_PM_COMMAND_WATCHDOG_TIMEOUT_SET:
 		break;

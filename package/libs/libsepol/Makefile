@@ -25,7 +25,7 @@ define Package/libsepol
   SECTION:=libs
   CATEGORY:=Libraries
   TITLE:=SELinux binary policy manipulation library
-  URL:=https://github.com/selinuxproject
+  URL:=http://selinuxproject.org/page/Main_Page
 endef
 
 define Package/libsepol/description
@@ -38,7 +38,7 @@ define Package/chkcon
   CATEGORY:=Utilities
   DEPENDS:=+libsepol
   TITLE:=libsepol chkcon security context validation tool
-  URL:=https://github.com/selinuxproject
+  URL:=http://selinuxproject.org/page/Main_Page
 endef
 
 define Package/chkcon/description

@@ -26,7 +26,7 @@ define Package/soloscli
   CATEGORY:=Network
   TITLE:=Configuration utility for Solos ADSL2+ modems
   DEPENDS:=+kmod-solos-pci
-  URL:=https://sourceforge.net/projects/openadsl
+  URL:=http://sourceforge.net/projects/openadsl
 endef
 
 define Package/soloscli/description

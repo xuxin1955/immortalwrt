@@ -93,9 +93,6 @@ CONFIGURE_ARGS += \
 	--without-msgpack \
 	--disable-gprofng
 
-MAKE_VARS+= \
-	CPPFLAGS="$(TARGET_CPPFLAGS)"
-
 define Build/Install
 	$(call Build/Install/Default)
 	$(MAKE) -C $(PKG_BUILD_DIR)/libiberty \

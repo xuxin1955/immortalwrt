@@ -31,7 +31,7 @@ define Package/libunwind
   SECTION:=libs
   CATEGORY:=Libraries
   TITLE:=The libunwind project
-  URL:=https://www.nongnu.org/libunwind/
+  URL:=http://www.nongnu.org/libunwind/
   DEPENDS:=@!(USE_MUSL&&(powerpc)) +zlib
   ABI_VERSION:=8
 endef

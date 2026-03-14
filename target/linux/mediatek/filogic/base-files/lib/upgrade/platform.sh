@@ -87,7 +87,6 @@ platform_do_upgrade() {
 	bananapi,bpi-r4-2g5|\
 	bananapi,bpi-r4-poe|\
 	bananapi,bpi-r4-lite|\
-	bazis,ax3000wm|\
 	cetron,ct3003-ubootmod|\
 	cmcc,a10-ubootmod|\
 	cmcc,rax3000m|\
@@ -107,7 +106,6 @@ platform_do_upgrade() {
 	mercusys,mr90x-v1-ubi|\
 	netis,nx30v2|\
 	netis,nx31|\
-	netis,nx32u|\
 	nokia,ea0326gmp|\
 	openwrt,one|\
 	netcore,n60|\
@@ -126,17 +124,14 @@ platform_do_upgrade() {
 	xiaomi,mi-router-ax3000t-ubootmod|\
 	xiaomi,redmi-router-ax6000-ubootmod|\
 	xiaomi,mi-router-wr30u-ubootmod|\
-	zyxel,ex5601-t0-ubootmod|\
-	zyxel,wx5600-t0-ubootmod)
+	zyxel,ex5601-t0-ubootmod)
 		fit_do_upgrade "$1"
 		;;
 	acer,predator-w6|\
 	acer,predator-w6d|\
 	acer,vero-w6m|\
-	airpi,ap3000m|\
 	arcadyan,mozart|\
 	glinet,gl-mt2500|\
-	glinet,gl-mt2500-airoha|\
 	glinet,gl-mt6000|\
 	glinet,gl-x3000|\
 	glinet,gl-xe3000|\
@@ -203,7 +198,6 @@ platform_do_upgrade() {
 	mercusys,mr85x|\
 	mercusys,mr90x-v1|\
 	tplink,archer-ax80-v1|\
-	tplink,archer-ax80-v1-eu|\
 	tplink,be450|\
 	tplink,re6000xd)
 		CI_UBIPART="ubi0"
@@ -288,7 +282,6 @@ platform_check_image() {
 	bananapi,bpi-r4-2g5|\
 	bananapi,bpi-r4-poe|\
 	bananapi,bpi-r4-lite|\
-	bazis,ax3000wm|\
 	cetron,ct3003-ubootmod|\
 	cmcc,a10-ubootmod|\
 	cmcc,rax3000m|\
@@ -307,7 +300,6 @@ platform_check_image() {
 	mediatek,mt7988a-rfb|\
 	mercusys,mr90x-v1-ubi|\
 	nokia,ea0326gmp|\
-	netis,nx32u|\
 	openwrt,one|\
 	netcore,n60|\
 	netcore,n60-pro|\
@@ -354,10 +346,8 @@ platform_copy_config() {
 	acer,predator-w6|\
 	acer,predator-w6d|\
 	acer,vero-w6m|\
-	airpi,ap3000m|\
 	arcadyan,mozart|\
 	glinet,gl-mt2500|\
-	glinet,gl-mt2500-airoha|\
 	glinet,gl-mt6000|\
 	glinet,gl-x3000|\
 	glinet,gl-xe3000|\

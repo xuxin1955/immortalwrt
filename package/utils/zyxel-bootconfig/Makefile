@@ -26,7 +26,7 @@ endef
 define Build/Compile
 	$(MAKE) -C $(PKG_BUILD_DIR) \
 		CC="$(TARGET_CC)" \
-		CFLAGS="$(TARGET_CFLAGS) $(TARGET_CPPFLAGS) -Wall" \
+		CFLAGS="$(TARGET_CFLAGS) -Wall" \
 		LDFLAGS="$(TARGET_LDFLAGS)"
 endef
 

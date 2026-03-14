@@ -104,7 +104,7 @@ define Build/U-Boot/Target
       endif
     endif
     $(if $(DEFAULT),DEFAULT:=$(DEFAULT))
-    URL:=https://docs.u-boot.org/en/latest/
+    URL:=http://www.denx.de/wiki/U-Boot
   endef
 
   define Package/u-boot-$(1)/install

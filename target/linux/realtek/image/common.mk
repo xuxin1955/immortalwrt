@@ -5,16 +5,9 @@ define Device/cameo-fw
   KERNEL := \
 	kernel-bin | \
 	append-dtb | \
-	rt-compress | \
-	rt-loader | \
-	uImage none | \
+	libdeflate-gzip | \
+	uImage gzip | \
 	cameo-tag
-  KERNEL_INITRAMFS := \
-	kernel-bin | \
-	append-dtb | \
-	rt-compress | \
-	rt-loader | \
-	uImage none
   IMAGES += factory_image1.bin
   IMAGE/factory_image1.bin := \
 	append-kernel | \

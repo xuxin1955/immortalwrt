@@ -1,7 +1,5 @@
 /dts-v1/;
 
-#include <dt-bindings/clock/mediatek,mtmips-sysc.h>
-
 / {
 	#address-cells = <1>;
 	#size-cells = <1>;
@@ -51,7 +49,7 @@
 			compatible = "ralink,rt2880-timer";
 			reg = <0x100 0x20>;
 
-			clocks = <&sysc RT2880_CLK_TIMER>;
+			clocks = <&sysc 3>;
 
 			interrupt-parent = <&intc>;
 			interrupts = <1>;
@@ -63,7 +61,7 @@
 			compatible = "ralink,rt2880-wdt";
 			reg = <0x120 0x10>;
 
-			clocks = <&sysc RT2880_CLK_WATCHDOG>;
+			clocks = <&sysc 4>;
 		};
 
 		intc: intc@200 {
@@ -144,7 +142,7 @@
 			compatible = "ralink,rt2880-i2c";
 			reg = <0x900 0x100>;
 
-			clocks = <&sysc RT2880_CLK_I2C>;
+			clocks = <&sysc 6>;
 
 			resets = <&sysc 9>;
 			reset-names = "i2c";
@@ -162,7 +160,7 @@
 			compatible = "ralink,rt2880-uart", "ns16550a";
 			reg = <0xc00 0x100>;
 
-			clocks = <&sysc RT2880_CLK_UARTLITE>;
+			clocks = <&sysc 7>;
 
 			interrupt-parent = <&intc>;
 			interrupts = <8>;
@@ -221,7 +219,7 @@
 		#address-cells = <1>;
 		#size-cells = <0>;
 
-		clocks = <&sysc RT2880_CLK_ETHERNET>;
+		clocks = <&sysc 8>;
 
 		resets = <&sysc 18>;
 		reset-names = "fe";
@@ -248,7 +246,7 @@
 		compatible = "ralink,rt2880-wifi";
 		reg = <0x480000 0x40000>;
 
-		clocks = <&sysc RT2880_CLK_WMAC>;
+		clocks = <&sysc 9>;
 
 		interrupt-parent = <&cpuintc>;
 		interrupts = <6>;

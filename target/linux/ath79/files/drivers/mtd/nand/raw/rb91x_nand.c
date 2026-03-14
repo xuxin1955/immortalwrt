@@ -20,6 +20,7 @@
 #include <linux/platform_device.h>
 #include <linux/gpio/consumer.h>
 #include <linux/version.h>
+#include <linux/of_platform.h>
 
 #include <asm/mach-ath79/ar71xx_regs.h>
 
@@ -217,7 +218,7 @@ static void rb91x_nand_read(struct rb91x_nand_drvdata *drvdata,
 
 static int rb91x_nand_dev_ready(struct nand_chip *chip)
 {
-	struct rb91x_nand_drvdata *drvdata = chip->priv;
+	struct rb91x_nand_drvdata *drvdata = (struct rb91x_nand_drvdata *)(chip->priv);
 
 	return gpiod_get_value_cansleep(drvdata->gpio[RB91X_NAND_RDY]);
 }
@@ -262,10 +263,15 @@ static void rb91x_nand_write_buf(struct nand_chip *chip, const u8 *buf, int len)
 	rb91x_nand_write(chip->priv, buf, len);
 }
 
+static void rb91x_nand_release(struct rb91x_nand_drvdata *drvdata)
+{
+	mtd_device_unregister(nand_to_mtd(&drvdata->chip));
+	nand_cleanup(&drvdata->chip);
+}
+
 static int rb91x_nand_probe(struct platform_device *pdev)
 {
 	struct rb91x_nand_drvdata *drvdata;
-	struct nand_chip *nand;
 	struct mtd_info *mtd;
 	int r;
 	struct device *dev = &pdev->dev;
@@ -288,13 +294,9 @@ static int rb91x_nand_probe(struct platform_device *pdev)
 
 	drvdata->gpio = gpios->desc;
 
-	r = gpiod_direction_input(drvdata->gpio[RB91X_NAND_RDY]);
-	if (r)
-		return dev_err_probe(dev, r, "failed to set RDY gpio as input");
+	gpiod_direction_input(drvdata->gpio[RB91X_NAND_RDY]);
 
-	drvdata->ath79_gpio_base = devm_ioremap(dev, AR71XX_GPIO_BASE, AR71XX_GPIO_SIZE);
-	if (!drvdata->ath79_gpio_base)
-		return dev_err_probe(dev, -ENOMEM, "failed to map GPIO registers");
+	drvdata->ath79_gpio_base = ioremap(AR71XX_GPIO_BASE, AR71XX_GPIO_SIZE);
 
 	drvdata->dev = dev;
 
@@ -311,20 +313,22 @@ static int rb91x_nand_probe(struct platform_device *pdev)
 	drvdata->chip.ecc.algo             = NAND_ECC_ALGO_HAMMING;
 	drvdata->chip.options = NAND_NO_SUBPAGE_WRITE;
 
-	nand = &drvdata->chip;
-	r = nand_scan(nand, 1);
-	if (r)
-		return dev_err_probe(dev, r, "nand_scan() failed");
+	r = nand_scan(&drvdata->chip, 1);
+	if (r) {
+		dev_err(dev, "nand_scan() failed: %d\n", r);
+		return r;
+	}
 
-	mtd = nand_to_mtd(nand);
+	mtd = nand_to_mtd(&drvdata->chip);
 	mtd->dev.parent = dev;
 	mtd_set_of_node(mtd, dev->of_node);
+	mtd->owner = THIS_MODULE;
 	if (mtd->writesize == 512)
 		mtd_set_ooblayout(mtd, &rb91x_nand_ecclayout_ops);
 
 	r = mtd_device_register(mtd, NULL, 0);
 	if (r) {
-		nand_cleanup(nand);
+		rb91x_nand_release(drvdata);
 		return dev_err_probe(dev, r, "mtd_device_register() failed");
 	}
 
@@ -334,11 +338,8 @@ static int rb91x_nand_probe(struct platform_device *pdev)
 static void rb91x_nand_remove(struct platform_device *pdev)
 {
 	struct rb91x_nand_drvdata *drvdata = platform_get_drvdata(pdev);
-	struct nand_chip *nand = &drvdata->chip;
-	struct mtd_info *mtd = nand_to_mtd(nand);
 
-	mtd_device_unregister(mtd);
-	nand_cleanup(nand);
+	rb91x_nand_release(drvdata);
 }
 
 static const struct of_device_id rb91x_nand_match[] = {
@@ -350,7 +351,7 @@ MODULE_DEVICE_TABLE(of, rb91x_nand_match);
 
 static struct platform_driver rb91x_nand_driver = {
 	.probe	= rb91x_nand_probe,
-	.remove	= rb91x_nand_remove,
+	.remove_new	= rb91x_nand_remove,
 	.driver	= {
 		.name	= "rb91x-nand",
 		.of_match_table = rb91x_nand_match,

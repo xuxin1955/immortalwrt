@@ -14,7 +14,7 @@ define Package/tmon
   SECTION:=devel
   CATEGORY:=Development
   TITLE:=Thermal monitoring and testing tool
-  URL:=https://www.kernel.org
+  URL:=http://www.kernel.org
   DEPENDS:=+libncursesw
 endef
 

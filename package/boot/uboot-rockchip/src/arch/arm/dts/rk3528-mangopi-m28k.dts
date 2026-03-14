@@ -55,11 +55,3 @@
 		};
 	};
 };
-
-&rgmii_led1 {
-	color = <LED_COLOR_ID_AMBER>;
-};
-
-&rgmii_led2 {
-	color = <LED_COLOR_ID_GREEN>;
-};

@@ -17,7 +17,6 @@ proto_dhcpv6_init_config() {
 	proto_config_add_string 'forceprefix:bool'
 	proto_config_add_string 'extendprefix:bool'
 	proto_config_add_string 'norelease:bool'
-	proto_config_add_boolean strict_rfc7550
 	proto_config_add_string 'noserverunicast:bool'
 	proto_config_add_string 'noclientfqdn:bool'
 	proto_config_add_string 'noacceptreconfig:bool'
@@ -60,7 +59,7 @@ proto_dhcpv6_setup() {
 	local iface="$2"
 
 	local reqaddress reqprefix clientid reqopts defaultreqopts
-	local noslaaconly forceprefix extendprefix norelease strict_rfc7550
+	local noslaaconly forceprefix extendprefix norelease
 	local noserverunicast noclientfqdn noacceptreconfig iface_dslite
 	local iface_map iface_464xlat ip6ifaceid userclass vendorclass
 	local delegate zone_dslite zone_map zone_464xlat zone encaplimit_dslite
@@ -70,7 +69,7 @@ proto_dhcpv6_setup() {
 	local ip6prefix ip6prefixes
 
 	json_get_vars reqaddress reqprefix clientid reqopts defaultreqopts
-	json_get_vars noslaaconly forceprefix extendprefix norelease strict_rfc7550
+	json_get_vars noslaaconly forceprefix extendprefix norelease
 	json_get_vars noserverunicast noclientfqdn noacceptreconfig iface_dslite
 	json_get_vars iface_map iface_464xlat ip6ifaceid userclass vendorclass
 	json_get_vars delegate zone_dslite zone_map zone_464xlat zone encaplimit_dslite
@@ -97,8 +96,6 @@ proto_dhcpv6_setup() {
 	[ "$forceprefix" = "1" ] && append opts "-F"
 
 	[ "$norelease" = "1" ] && append opts "-k"
-
-	[ "$strict_rfc7550" = "1" ] && append opts "--strict-rfc7550"
 
 	[ "$noserverunicast" = "1" ] && append opts "-U"
 
@@ -183,3 +180,4 @@ proto_dhcpv6_teardown() {
 }
 
 add_protocol dhcpv6
+

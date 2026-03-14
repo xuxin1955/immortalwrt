@@ -1,4 +1,4 @@
-DTS_DIR := $(DTS_DIR)/qcom
+
 DEVICE_VARS += NETGEAR_BOARD_ID NETGEAR_HW_ID
 DEVICE_VARS += RAS_BOARD RAS_ROOTFS_SIZE RAS_VERSION
 DEVICE_VARS += WRGG_DEVNAME WRGG_SIGNATURE
@@ -343,7 +343,8 @@ define Device/cilab_meshpoint-one
 	DEVICE_MODEL := MeshPoint.One
 	DEVICE_PACKAGES += kmod-i2c-gpio kmod-iio-bmp280-i2c kmod-hwmon-ina2xx kmod-rtc-pcf2127
 endef
-TARGET_DEVICES += cilab_meshpoint-one
+# Missing DSA Setup
+#TARGET_DEVICES += cilab_meshpoint-one
 
 define Device/compex_wpj419
 	$(call Device/FitImage)
@@ -725,7 +726,7 @@ define Device/linksys_mr6350
 	PAGESIZE := 2048
 	UBINIZE_OPTS := -E 5    # EOD marks to "hide" factory sig at EOF
 	IMAGES += factory.bin
-	IMAGE/factory.bin  := append-kernel | pad-to $$$$(KERNEL_SIZE) | append-ubi | linksys-image type=MR6350
+	IMAGE/factory.bin  := append-kernel | pad-to $$(KERNEL_SIZE) | append-ubi | linksys-image type=MR6350
 	DEVICE_PACKAGES := ipq-wifi-linksys_mr6350 kmod-usb-ledtrig-usbport
 endef
 TARGET_DEVICES += linksys_mr6350
@@ -821,14 +822,6 @@ define Device/meraki_common
 	DEVICE_PACKAGES := ath10k-firmware-qca9887-ct
 endef
 
-define Device/meraki_mr20
-	$(call Device/meraki_common)
-	DEVICE_MODEL := MR20
-	DEVICE_DTS_CONFIG := config@4
-	DEVICE_PACKAGES := ipq-wifi-meraki_underdog
-endef
-TARGET_DEVICES += meraki_mr20
-
 define Device/meraki_mr30h
 	$(call Device/meraki_common)
 	DEVICE_MODEL := MR30H
@@ -842,14 +835,6 @@ define Device/meraki_mr33
 	DEVICE_MODEL := MR33
 endef
 TARGET_DEVICES += meraki_mr33
-
-define Device/meraki_mr70
-	$(call Device/meraki_common)
-	DEVICE_MODEL := MR70
-	DEVICE_DTS_CONFIG := config@5
-	DEVICE_PACKAGES := ipq-wifi-meraki_underdog
-endef
-TARGET_DEVICES += meraki_mr70
 
 define Device/meraki_mr74
 	$(call Device/meraki_common)

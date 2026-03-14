@@ -8,16 +8,6 @@
 	model = "Zyxel GS1900-24E A1";
 };
 
-&gpio0 {
-	/* Shared between the main and aux MDIO busses */
-	mdio_reset {
-		gpio-hog;
-		gpios = <1 GPIO_ACTIVE_LOW>;
-		output-low;
-		line-name = "mdio-reset";
-	};
-};
-
 &mdio_bus0 {
 	EXTERNAL_PHY(0)
 	EXTERNAL_PHY(1)
@@ -39,7 +29,7 @@
 };
 
 &switch0 {
-	ethernet-ports {
+	ports {
 		SWITCH_PORT_SDS(1, 1, 0, qsgmii)
 		SWITCH_PORT_SDS(0, 2, 0, qsgmii)
 		SWITCH_PORT_SDS(3, 3, 0, qsgmii)

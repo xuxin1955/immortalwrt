@@ -30,7 +30,7 @@ define Package/libgmp
   SECTION:=libs
   CATEGORY:=Libraries
   TITLE:=GNU multiprecision arithmetic library
-  URL:=https://gmplib.org/
+  URL:=http://gmplib.org/
   ABI_VERSION:=10
 endef
 

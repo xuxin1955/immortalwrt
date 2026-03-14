@@ -238,7 +238,7 @@ $(eval $(call KernelPackage,mdio-gpio))
 define KernelPackage/et131x
   SUBMENU:=$(NETWORK_DEVICES_MENU)
   TITLE:=Agere ET131x Gigabit Ethernet driver
-  URL:=https://sourceforge.net/projects/et131x
+  URL:=http://sourceforge.net/projects/et131x
   FILES:= \
 	$(LINUX_DIR)/drivers/net/ethernet/agere/et131x.ko
   KCONFIG:= \
@@ -2291,37 +2291,6 @@ endef
 
 $(eval $(call KernelPackage,mhi-wwan-mbim))
 
-define KernelPackage/rpmsg-wwan-ctrl
-  SUBMENU:=$(NETWORK_DEVICES_MENU)
-  TITLE:=RPMSG WWAN Control
-  DEPENDS:=@LINUX_6_1||LINUX_6_6||LINUX_6_12 +kmod-wwan
-  KCONFIG:=CONFIG_RPMSG_WWAN_CTRL
-  FILES:=$(LINUX_DIR)/drivers/net/wwan/rpmsg_wwan_ctrl.ko
-  AUTOLOAD:=$(call AutoProbe,rpmsg_wwan_ctrl)
-endef
-
-define KernelPackage/rpmsg-wwan-ctrl/description
- Driver for RPMSG WWAN Control
- This exposes all modem control ports like AT, QMI that use RPMSG
-endef
-
-$(eval $(call KernelPackage,rpmsg-wwan-ctrl))
-
-define KernelPackage/bam-dmux
-  SUBMENU:=$(NETWORK_DEVICES_MENU)
-  TITLE:=Qualcomm BAM-DMUX WWAN network driver
-  DEPENDS:=@TARGET_msm89xx +kmod-wwan
-  KCONFIG:=CONFIG_QCOM_BAM_DMUX
-  FILES:=$(LINUX_DIR)/drivers/net/wwan/qcom_bam_dmux.ko
-  AUTOLOAD:=$(call AutoProbe,qcom_bam_dmux)
-endef
-
-define KernelPackage/bam-dmux/description
-  Kernel modules for Qualcomm BAM-DMUX WWAN interface
-endef
-
-$(eval $(call KernelPackage,bam-dmux))
-
 define KernelPackage/mtk-t7xx
   SUBMENU:=$(NETWORK_DEVICES_MENU)
   TITLE:=MediaTek T7xx 5G modem
@@ -2402,21 +2371,3 @@ define KernelPackage/enc28j60/description
 endef
 
 $(eval $(call KernelPackage,enc28j60))
-
-define KernelPackage/sparx5-switch
-  SUBMENU:=$(NETWORK_DEVICES_MENU)
-  TITLE:=Sparx5 switch driver
-  DEPENDS:=@TARGET_microchipsw +kmod-phylink +kmod-ptp
-  KCONFIG:= \
-  CONFIG_SPARX5_SWITCH \
-  CONFIG_LAN969X_SWITCH=y \
-  CONFIG_SPARX5_DCB=y
-  FILES:=$(LINUX_DIR)/drivers/net/ethernet/microchip/sparx5/sparx5-switch.ko
-  AUTOLOAD:=$(call AutoProbe,sparx5-switch,1)
-endef
-
-define KernelPackage/sparx5-switch/description
-  This driver supports the Sparx5 network switch device.
-endef
-
-$(eval $(call KernelPackage,sparx5-switch))
