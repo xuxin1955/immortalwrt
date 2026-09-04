@@ -11,10 +11,10 @@ endef
 ### Image scripts ###
 define Build/aboot-img
 	mkbootimg \
-		--kernel $@ \
-		--ramdisk /dev/null \
-		--cmdline $(CMDLINE) \
-		-o $@.new
+	  --kernel $@ \
+	  --ramdisk /dev/null \
+	  --cmdline $(CMDLINE) \
+	  -o $@.new
 	mv $@.new $@
 endef
 
@@ -29,7 +29,7 @@ define Device/Default
 	KERNEL = kernel-bin | gzip | append-dtb | aboot-img
 	IMAGES := boot.img system.img sysupgrade.bin
 	IMAGE/boot.img := append-kernel | append-metadata
-	IMAGE/system.img := append-rootfs | sparse-img | append-metadata
+	IMAGE/system.img := append-rootfs | append-metadata
 	IMAGE/sysupgrade.bin := sysupgrade-tar | append-metadata
 	DEVICE_DTS_DIR := $(DTS_DIR)/qcom
 	DEVICE_DTS = $$(SOC)-$(lastword $(subst _, ,$(1)))
