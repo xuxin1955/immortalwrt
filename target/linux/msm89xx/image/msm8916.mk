@@ -105,6 +105,8 @@ define Device/openstick-jz02v10
   DEVICE_MODEL := OpenStick JZ02V10
   DEVICE_DTS := msm8916-thwc-jz02v10
   DEVICE_DTS_DIR := ../dts
+  KERNEL_INITRAMFS := kernel-bin | gzip | append-dtb | aboot-initramfs-img
+  KERNEL_INITRAMFS_SUFFIX := -initramfs-boot.img
   DEVICE_PACKAGES := openstick-tweaks wpad-basic-wolfssl qcom-msm8916-modem-openstick-jz02v10-firmware qcom-msm8916-openstick-jz02v10-wcnss-firmware qcom-msm8916-wcnss-openstick-jz02v10-nv
 endef
 TARGET_DEVICES += openstick-jz02v10

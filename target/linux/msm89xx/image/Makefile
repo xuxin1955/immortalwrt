@@ -18,6 +18,15 @@ define Build/aboot-img
 	mv $@.new $@
 endef
 
+define Build/aboot-initramfs-img
+	mkbootimg \
+		--kernel $@ \
+		--ramdisk /dev/null \
+		--cmdline "earlycon console=tty0 console=ttyMSM0,115200" \
+		-o $@.new
+	mv $@.new $@
+endef
+
 define Build/sparse-img
 	img2simg  $@ $@.new
 	mv $@.new $@
