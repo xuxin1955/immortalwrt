@@ -7,18 +7,31 @@ RAMFS_COPY_DATA="/lib/functions.sh /lib/upgrade/common.sh /lib/upgrade/fwtool.sh
 
 platform_check_image() {
     local fw_image="$1"
-    local boardname
+    local board_dir
 
-    read boardname </tmp/sysinfo/board_name
-    boardname=${boardname//-/}
-    boardname=${boardname//,/-}
+    # Check that this is a valid sysupgrade tar archive
+    board_dir=$(tar tf "$fw_image" 2>/dev/null |         grep -m 1 '^sysupgrade-.*/$')
 
-    # Must be a tar archive
-    local control_len=$( (tar xf $fw_image sysupgrade-$boardname/CONTROL -O | wc -c) 2> /dev/null)
-
-    # check if valid sysupgrade tar archive
-    if [ "$control_len" = "0" ]; then
+    if [ -z "$board_dir" ]; then
         echo "Invalid sysupgrade file: $fw_image"
+        return 1
+    fi
+
+    board_dir=${board_dir%/}
+
+    # Check required sysupgrade files
+    if ! tar tf "$fw_image" 2>/dev/null | grep -q "^${board_dir}/CONTROL$"; then
+        echo "Invalid sysupgrade file: missing CONTROL"
+        return 1
+    fi
+
+    if ! tar tf "$fw_image" 2>/dev/null | grep -q "^${board_dir}/kernel$"; then
+        echo "Invalid sysupgrade file: missing kernel"
+        return 1
+    fi
+
+    if ! tar tf "$fw_image" 2>/dev/null | grep -q "^${board_dir}/root$"; then
+        echo "Invalid sysupgrade file: missing root"
         return 1
     fi
 
@@ -28,7 +41,7 @@ platform_check_image() {
 platform_do_upgrade() {
     local tar_file="$1"
     local boot_part rootfs_part
-    local board_dir=$(tar tf $tar_file | grep -m 1 '^sysupgrade-.*/$')
+    local board_dir=$(tar tf "$tar_file" | grep -m 1 '^sysupgrade-.*/$')
     board_dir=${board_dir%/}
 
     # Locate partitions by GPT label
@@ -46,15 +59,16 @@ platform_do_upgrade() {
     }
 
     echo "sysupgrade: writing kernel to $boot_part"
-    tar -xOf "$tar_file" ${board_dir}/kernel 2>/dev/null |         dd of="$boot_part" bs=4096 conv=fsync
+    tar -xOf "$tar_file" "${board_dir}/kernel" 2>/dev/null |         dd of="$boot_part" bs=4096 conv=fsync
 
     echo "sysupgrade: writing rootfs to $rootfs_part"
-    tar -xOf "$tar_file" ${board_dir}/root 2>/dev/null |         dd of="$rootfs_part" bs=4096 conv=fsync
+    tar -xOf "$tar_file" "${board_dir}/root" 2>/dev/null |         dd of="$rootfs_part" bs=4096 conv=fsync
 
     sync
 }
 
 platform_pre_upgrade() {
     rm -fr /overlay/upper/* /overlay/upper/.* 2>/dev/null
+
     [ -f "$UPGRADE_BACKUP" ] &&         cp -f "$UPGRADE_BACKUP" "/overlay/upper/$BACKUP_FILE" 2>/dev/null
 }
