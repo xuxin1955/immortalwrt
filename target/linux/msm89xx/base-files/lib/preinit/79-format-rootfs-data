@@ -21,7 +21,7 @@ preinit_format_rootfs_data() {
 
     echo "rootfs_data: no valid filesystem, formatting..." > /dev/kmsg
 
-    if mkfs.ext4 -F -L rootfs_data -O ^has_journal "$ROOTFS_DATA" >/dev/null 2>&1; then
+    if mkfs.ext4 -F -L rootfs_data "$ROOTFS_DATA" >/dev/null 2>&1; then
         echo "rootfs_data: format complete, rebooting..." > /dev/kmsg
         sync
         sleep 1
