@@ -25,6 +25,7 @@ preinit_format_rootfs_data() {
         echo "rootfs_data: format complete, rebooting..." > /dev/kmsg
         sync
         sleep 1
+        sync
         reboot -f
     else
         echo "rootfs_data: ERROR - format failed" > /dev/kmsg
