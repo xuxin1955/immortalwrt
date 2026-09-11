@@ -76,3 +76,8 @@ platform_do_upgrade() {
 
     sync
 }
+
+platform_pre_upgrade() {
+    rm -fr /overlay/upper/* /overlay/upper/.* 2>/dev/null
+    [ -f "$UPGRADE_BACKUP" ] && cp -f "$UPGRADE_BACKUP" "/overlay/upper/$BACKUP_FILE" 2>/dev/null
+}
