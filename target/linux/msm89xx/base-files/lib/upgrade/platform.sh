@@ -75,6 +75,24 @@ platform_do_upgrade() {
         }
 
     sync
+
+    if [ "$SAVE_CONFIG" != "1" ]; then
+        echo "sysupgrade: not keeping config, wiping overlay signature"
+
+        overlay_dev=$(find_mmc_part "rootfs_data")
+        [ -z "$overlay_dev" ] && overlay_dev=/dev/mmcblk0p15
+
+        if [ -b "$overlay_dev" ]; then
+            echo "sysupgrade: wiping first 1MB of $overlay_dev"
+            dd if=/dev/zero of="$overlay_dev" bs=1M count=1 2>/dev/null
+            sync
+            echo "sysupgrade: signature wiped, fstools will rebuild on next boot"
+        else
+            echo "sysupgrade: overlay partition not found, skipping"
+        fi
+    else
+        echo "sysupgrade: keeping config, skip overlay wipe"
+    fi
 }
 
 platform_pre_upgrade() {
