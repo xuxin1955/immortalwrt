@@ -108,7 +108,6 @@
 
 &sdhc_1 {
 	status = "okay";
-	max-frequency = <37500000>;
 };
 
 //&usb {
